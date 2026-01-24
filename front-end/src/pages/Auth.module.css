@@ -1,0 +1,102 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #0f0c29;  
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); 
+}
+
+.card {
+    width: 350px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+}
+
+.title {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.inputGroup {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 5px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+    transition: 0.3s;
+}
+
+.input:focus {
+    border-bottom: 1px solid #03e9f4; 
+}
+
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.button {
+    width: 100%;
+    padding: 10px 20px;
+    color: #03e9f4;
+    background: transparent;
+    border: 1px solid #03e9f4;
+    border-radius: 5px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.5s;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background: #03e9f4;
+    color: #050801;
+    box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4; /* Эффект свечения */
+}
+
+.switch {
+    margin-top: 20px;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+}
+
+.link {
+    color: #03e9f4;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+}
