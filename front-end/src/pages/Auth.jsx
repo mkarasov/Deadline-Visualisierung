@@ -24,7 +24,9 @@ const Auth = () => {
             }
 
             localStorage.setItem('token', response.data.token);
-            
+            localStorage.setItem('email', email);
+
+
             navigate('/');
             
         } catch (e) {
