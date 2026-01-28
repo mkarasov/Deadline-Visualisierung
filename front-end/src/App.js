@@ -10,7 +10,7 @@ function AppWrapper(){
 
   return (
     <>
-      {location.pathname !== "/logn" && <Header />}
+      {location.pathname !== "/login" && <Header />}
 
       <Routes>
         <Route path="/login" element={<Auth />} />

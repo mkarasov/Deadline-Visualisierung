@@ -1,10 +1,14 @@
 .dashboardPage {
     position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-color: #0f0c29; 
-    overflow: hidden; 
+    /*padding-top: 60px; */
+    width: 100%;
+    max-height: 100vh;
+    box-sizing: border-box;
+    background-color: #0f0c29;
+    overflow: hidden; /* prevents scrollbars */
+    overscroll-behavior: contain; /* prevents scroll chaining */
 }
+
 
 .controlPanel {
     position: absolute;
@@ -21,6 +25,8 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    max-width: calc(100vw - 40px);
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     z-index: 10; 
@@ -81,4 +87,8 @@
     background: red;
     color: #000;
     box-shadow: 0 0 10px red;
+}
+
+* {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
 }
