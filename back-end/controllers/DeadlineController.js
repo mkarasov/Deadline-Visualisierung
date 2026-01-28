@@ -10,7 +10,7 @@ class DeadlineController {
     async upload (req, res, next) {
         try {
             if (!req.files || !req.files.calendar) {
-                return next(ApiError.badRequest('The file is not attached'))
+                return next(ApiError.badRequest('Die Datei ist nicht angehängt.'))
             }
 
             const file = req.files.calendar;

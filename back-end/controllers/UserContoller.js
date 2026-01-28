@@ -12,12 +12,12 @@ class UserController {
             const { email, password } = req.body;
 
             if (!email || !password) {
-                return next(ApiError.badRequest("Please, enter email and password"));
+                return next(ApiError.badRequest("Bitte geben Sie E‑Mail und Passwort ein."));
             }
             
             const existedUser = await User.findOne({where: {email}});
             if (existedUser) {
-                return next(ApiError.badRequest("The user with this email alredy exists"));
+                return next(ApiError.badRequest("Ein Benutzer mit dieser E‑Mail existiert bereits."));
             }
 
             const passwordHash = await bcrypt.hash(password, 7);
@@ -38,16 +38,16 @@ class UserController {
         try {
             const { email, password } = req.body;
             if (!email || !password) {
-                return next(ApiError.badRequest('Please, enter your email and password'));
+                return next(ApiError.badRequest('Bitte geben Sie E‑Mail und Passwort ein.'));
             }
 
             const user = await User.findOne({where: {email: email}});
             if (!user) {
-                return next(ApiError.badRequest('Entered email or password is wrong'));
+                return next(ApiError.badRequest('Die eingegebene E‑Mail oder das Passwort ist falsch.'));
             }
 
             if (!bcrypt.compareSync(password, user.password_hash)) {
-                return next(ApiError.badRequest('Entered email or password is wrong'));
+                return next(ApiError.badRequest('Die eingegebene E‑Mail oder das Passwort ist falsch.'));
             }
 
             const token = jwt.generateJWT(user.id, user.email);
