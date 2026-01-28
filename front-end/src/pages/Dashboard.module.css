@@ -1,18 +1,16 @@
-/* Контейнер на весь экран */
 .dashboardPage {
     position: relative;
     width: 100vw;
     height: 100vh;
-    background-color: #0f0c29; /* Тот же темный фон */
-    overflow: hidden; /* Чтобы не было полос прокрутки */
+    background-color: #0f0c29; 
+    overflow: hidden; 
 }
 
-/* Плавающая панель управления */
 .controlPanel {
     position: absolute;
     top: 20px;
     left: 50%;
-    transform: translateX(-50%); /* Центрируем по горизонтали */
+    transform: translateX(-50%); 
     
     display: flex;
     align-items: center;
@@ -25,7 +23,7 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    z-index: 10; /* Поверх канваса */
+    z-index: 10; 
 }
 
 .title {
@@ -36,7 +34,6 @@
     margin-right: 10px;
 }
 
-/* Стилизация input type="file" */
 .fileInput {
     color: rgba(255, 255, 255, 0.8);
     font-size: 14px;
@@ -57,7 +54,6 @@
     background: #00d4df;
 }
 
-/* Кнопки */
 .button {
     padding: 8px 20px;
     background: transparent;
@@ -70,8 +66,19 @@
     transition: 0.3s;
 }
 
+.deleteButton {
+    border: 1px solid red;
+    color: red;
+}
+
 .button:hover {
     background: #03e9f4;
     color: #000;
     box-shadow: 0 0 10px #03e9f4;
+}
+
+.deleteButton:hover {
+    background: red;
+    color: #000;
+    box-shadow: 0 0 10px red;
 }

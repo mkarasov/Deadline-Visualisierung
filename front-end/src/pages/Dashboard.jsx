@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Sketch from "react-p5";
 import { $authHost } from '../http';
+import ConfirmModal from '../components/ConfirmModal';
 import classes from './Dashboard.module.css'; 
 
 const Dashboard = () => {
     const [deadlines, setDeadlines] = useState([]);
     const [file, setFile] = useState(null);
+    const [showConfirm, setShowConfirm] = useState(false);
 
     const uploadFile = async () => {
         if (!file) {
@@ -33,6 +35,20 @@ const Dashboard = () => {
             console.error(e);
         }
     };
+
+    const handleDelete = () => {
+        setShowConfirm(true);
+    }
+
+    const confirmDelete = async () => {
+        try {
+            await $authHost.delete('deadline');
+            setDeadlines([]);
+            setShowConfirm(false);
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
         fetchDeadlines();
@@ -214,9 +230,24 @@ const Dashboard = () => {
                 >
                     Aktualisieren
                 </button>
+
+                <button
+                    className={`${classes.button} ${classes.deleteButton}`}
+                    onClick={handleDelete}
+                >
+                    Löschen
+                </button>
             </div>
             
             <Sketch setup={setup} draw={draw} windowResized={windowResized} />
+
+            <ConfirmModal 
+                open={showConfirm}
+                title={"Dashboard löshen"}
+                message={"Möchten Sie das Dashboard löshen?"}
+                onConfirm={confirmDelete}
+                onCancel={() => setShowConfirm(false)}
+            />
         </div>
     );
 };

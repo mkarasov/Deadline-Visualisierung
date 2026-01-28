@@ -65,6 +65,23 @@ class DeadlineController {
             next(ApiError.internal(e.message));
         }
     }
+
+    async deleteByUserId(req, res, next) {
+        try {
+            const userId = req.user.id;
+
+            await Deadline.destroy({
+                where: {
+                    userId: userId
+                }
+            });
+
+            return res.status(200).json({ message: "Deleted successfully "});
+
+        } catch (e) {
+            next(ApiError.internal(e.message));
+        }
+    }
 }
 
 module.exports = new DeadlineController();
