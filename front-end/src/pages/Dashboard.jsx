@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react'; // <--- 1. useRef importieren
 import Sketch from "react-p5";
 import { $authHost } from '../http';
 import ConfirmModal from '../components/ConfirmModal';
 import classes from './Dashboard.module.css'; 
+import DeadlineModal from '../components/DeadlineModal';
 
 const Dashboard = () => {
     const [deadlines, setDeadlines] = useState([]);
     const [file, setFile] = useState(null);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [showDeadlineModal, setShowDeadlineModal] = useState(false);
+    
+    const hoveredGroupRef = useRef(null);
+
+    const [selectedEventGroup, setSelectedEventGroup] = useState(null);
 
     const uploadFile = async () => {
         if (!file) {
@@ -63,7 +69,14 @@ const Dashboard = () => {
         p5.resizeCanvas(window.innerWidth, window.innerHeight);
     }
 
+    const mousePressed = (p5) => {
+        if (hoveredGroupRef.current) {
+            setSelectedEventGroup(hoveredGroupRef.current);
+        }
+    };
+
     const draw = (p5) => {
+
         p5.background(15, 12, 41);
         p5.noStroke();
 
@@ -86,6 +99,22 @@ const Dashboard = () => {
         p5.strokeWeight(2);
         p5.line(startX, centerY, endX, centerY);
         p5.noStroke();
+
+
+        const today = new Date().getTime();
+        if (today >= firstDate && today <= lastDate) {
+            const xToday = p5.map(today, firstDate, lastDate, startX, endX);
+            
+            p5.stroke(0, 255, 0, 150); 
+            p5.drawingContext.setLineDash([5, 5]);
+            p5.line(xToday, centerY - 50, xToday, centerY + 50);
+            p5.drawingContext.setLineDash([]); 
+            p5.noStroke();
+            p5.fill(0, 255, 0);
+            p5.textSize(10);
+            p5.textAlign(p5.CENTER);
+            p5.text("Heute", xToday, centerY - 60);
+}
 
         const groups = {};
 
@@ -112,7 +141,6 @@ const Dashboard = () => {
         });
 
         const groupedItems = Object.values(groups);
-
         
         let closestGroup = null;
         let minDistance = Infinity;
@@ -121,7 +149,6 @@ const Dashboard = () => {
             const x = p5.map(group.timestamp, firstDate, lastDate, startX, endX);
             const y = centerY; 
 
- 
             let size = group.maxWeight * 40 + 10;
             if (group.events.length > 1) {
                 size += (group.events.length - 1) * 5; 
@@ -145,8 +172,12 @@ const Dashboard = () => {
             }
         });
 
+        hoveredGroupRef.current = closestGroup;
+
         if (closestGroup) {
             const { x, y, size, events, date } = closestGroup;
+
+            p5.cursor(p5.HAND); 
 
             p5.noFill();
             p5.stroke(255);
@@ -205,6 +236,8 @@ const Dashboard = () => {
                 p5.textAlign(p5.LEFT, p5.TOP);
                 p5.text(title, boxX - 115, lineY);
             });
+        } else {
+            p5.cursor(p5.ARROW);
         }
     };
 
@@ -239,14 +272,26 @@ const Dashboard = () => {
                 </button>
             </div>
             
-            <Sketch setup={setup} draw={draw} windowResized={windowResized} />
+            <Sketch 
+                setup={setup} 
+                draw={draw} 
+                windowResized={windowResized} 
+                mousePressed={mousePressed} 
+            />
 
             <ConfirmModal 
                 open={showConfirm}
-                title={"Dashboard löshen"}
-                message={"Möchten Sie das Dashboard löshen?"}
+                title={"Dashboard löschen"}
+                message={"Möchten Sie das Dashboard löschen?"}
                 onConfirm={confirmDelete}
                 onCancel={() => setShowConfirm(false)}
+            />
+
+            <DeadlineModal 
+                open={!!selectedEventGroup}
+                title={selectedEventGroup ? new Date(selectedEventGroup.date).toLocaleDateString() : ""}
+                deadlines={selectedEventGroup ? selectedEventGroup.events : []}
+                onClose={() => setSelectedEventGroup(null)}
             />
         </div>
     );
