@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'; // <--- 1. useRef importieren
+import React, { useState, useEffect, useRef } from 'react'; 
 import Sketch from "react-p5";
 import { $authHost } from '../http';
 import ConfirmModal from '../components/ConfirmModal';
@@ -57,6 +57,27 @@ const Dashboard = () => {
         }
     }
 
+    const getNextDeadline = () => {
+        if (!deadlines || deadlines.length === 0) return null;
+
+        const now = new Date();
+        const future = deadlines.filter(d => new Date(d.deadline_date) > now);
+        
+        if (future.length === 0) return null;
+
+        future.sort((a, b) => new Date(a.deadline_date) - new Date(b.deadline_date));
+
+        return future[0];
+    };
+
+    const nextDeadline = getNextDeadline();
+    
+    let daysLeft = 0;
+    if (nextDeadline) {
+        const diff = new Date(nextDeadline.deadline_date) - new Date();
+        daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    }
+
     useEffect(() => {
         fetchDeadlines();
     }, []);
@@ -91,7 +112,7 @@ const Dashboard = () => {
 
         const startX = 100;
         const endX = p5.width - 100;
-        const centerY = p5.height / 2;
+        const centerY = p5.height * 0.45;
         
         const firstDate = new Date(deadlines[0].deadline_date).getTime();
         const lastDate = new Date(deadlines[deadlines.length - 1].deadline_date).getTime();
@@ -244,19 +265,24 @@ const Dashboard = () => {
 
     return (
         <div className={classes.dashboardPage}>
+            
             <div className={classes.controlPanel}>
-                <h3 className={classes.title}>Dashboard</h3>
-                
-                <input 
-                    type="file" 
-                    onChange={e => setFile(e.target.files[0])} 
-                    className={classes.fileInput}
-                />
+                <div className={classes.fileUploadWrapper}>
+                        <input 
+                        type="file" 
+                        id="fileInput"
+                        onChange={e => setFile(e.target.files[0])} 
+                        className={classes.fileInputHidden}
+                    />
+                    <label htmlFor="fileInput" className={classes.fileLabel}>
+                        {file ? file.name : "Datei auswählen"}
+                    </label>
+                </div>
                 
                 <button className={classes.button} onClick={uploadFile}>
                     Hochladen 
                 </button>
-            
+
 
                 <button
                     className={`${classes.button} ${classes.deleteButton}`}
@@ -264,6 +290,27 @@ const Dashboard = () => {
                 >
                     Löschen
                 </button>
+            </div>
+
+
+            <div className={classes.uiContainer}>
+                {nextDeadline && (
+                    <div className={classes.nextDeadlineCard}>
+                        <div className={classes.nextLabel}>Nächster Deadline:</div>
+                        <div 
+                            className={classes.nextTitle}
+                            dangerouslySetInnerHTML={{ __html: nextDeadline.title }}
+                        />
+                        <div className={classes.nextMeta}>
+                            <span className={classes.nextDate}>
+                                📅 {new Date(nextDeadline.deadline_date).toLocaleDateString('de-DE')}
+                            </span>
+                            <span className={classes.nextDays}>
+                                ⏳ Noch {daysLeft} Tage
+                            </span>
+                        </div>
+                    </div>
+                )}
             </div>
             
             <Sketch 

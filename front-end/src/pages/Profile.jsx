@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // <--- 1. Импорт
 import { $authHost } from '../http'; 
 import classes from './Profile.module.css';
 
 const Profile = () => {
+    const navigate = useNavigate(); // <--- 2. Хук навигации
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -29,6 +31,10 @@ const Profile = () => {
     if (!profile) return (
         <div className={classes.profilePage}>
             <div className={classes.errorText}>Profil konnte nicht geladen werden.</div>
+            {/* Кнопка возврата даже при ошибке */}
+            <button className={classes.backButton} onClick={() => navigate('/')}>
+                ← Zurück zum Dashboard
+            </button>
         </div>
     );
 
@@ -38,6 +44,12 @@ const Profile = () => {
     return (
         <div className={classes.profilePage}>
             
+            {/* 3. КНОПКА "НАЗАД" (Вставляем в самом верху) */}
+            <button className={classes.backButton} onClick={() => navigate('/')}>
+                ← Zurück zum Dashboard
+            </button>
+
+            {/* HEADER */}
             <div className={classes.header}>
                 <div className={classes.avatar}>
                     {avatarLetter}
@@ -46,7 +58,9 @@ const Profile = () => {
                 <p className={classes.subtitle}>Deine Semester-Statistik</p>
             </div>
 
+            {/* STATISTIK GRID */}
             <div className={classes.statsGrid}>
+                {/* ... (Твои карточки остались без изменений) ... */}
                 
                 <div className={classes.card}>
                     <div className={classes.cardIcon}>📊</div>
@@ -85,11 +99,13 @@ const Profile = () => {
                 </div>
 
             </div>
-
-            <button 
+            
+            {/* Кнопка выхода внизу (оставляем или убираем, так как она есть в хедере) */}
+             <button 
                 className={classes.logoutButton} 
                 onClick={() => {
                     localStorage.removeItem('token');
+                    localStorage.removeItem('email');
                     window.location.reload(); 
                 }}
             >

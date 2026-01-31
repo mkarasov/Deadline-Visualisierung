@@ -12,14 +12,24 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
+    setMenuOpen(false); 
     navigate("/login");
+  };
+
+  const goToProfile = () => {
+    setMenuOpen(false);
+    navigate("/profile");
+  };
+
+  const goHome = () => {
+    navigate("/");
   };
 
   if (!isAuth) return null;
 
   return (
     <header className="header">
-      <h1 className="logo">Deadline Dashboard</h1>
+      <h1 className="logo" onClick={goHome}>Deadline Dashboard</h1>
 
       <div className="userArea">
         <div className="avatar" onClick={() => setMenuOpen(!menuOpen)}>
@@ -29,8 +39,13 @@ const Header = () => {
         {menuOpen && (
           <div className="dropdown">
             <div className="dropdownEmail">{email}</div>
-            <button className="dropdownBtn" onClick={logout}>
-              Logout
+            
+            <button className="dropdownBtn" onClick={goToProfile}>
+              Profile
+            </button>
+            
+            <button className="dropdownBtn logoutBtn" onClick={logout}>
+              Abmelden
             </button>
           </div>
         )}

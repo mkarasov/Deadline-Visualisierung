@@ -1,9 +1,12 @@
 .profilePage {
     background-color: #0f0c29; 
-    height: 100vh;
-    overflow-y: auto;
+    height: 100vh; 
+    overflow-y: auto; 
     color: white;
-    padding: 60px 20px 80px 20px;
+    
+    /* ИЗМЕНЕНИЕ: Увеличиваем верхний отступ с 60px до 100px */
+    padding: 100px 20px 80px 20px; 
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -107,4 +110,30 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Кнопка "Назад" */
+.backButton {
+    align-self: flex-start; /* Прижимаем к левому краю контейнера */
+    background: transparent;
+    border: none;
+    color: #3be9f4; /* Наш любимый голубой неон */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px; /* Отступ от аватара */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    transition: transform 0.2s, color 0.2s;
+    /* Чтобы текст кнопки тоже был красивым шрифтом */
+    font-family: inherit; 
+    /* Максимальная ширина, чтобы на мобилках не ломалось */
+    max-width: 100%;
+}
+
+.backButton:hover {
+    color: #fff;
+    transform: translateX(-5px); /* Небольшой сдвиг влево для анимации */
 }
