@@ -70,6 +70,24 @@ class UserController {
         }
     }
     
+    async getUserInfo(req, res, next) {
+        try {
+            const id = req.user.id;
+
+            const user = await User.findOne({
+                where: {id: id}
+            });
+
+            if (!user) {
+                return next(ApiError.badRequest(`The user with ID: ${id} was not founded.`))
+            }
+
+            return res.json({user});
+
+        } catch (e) {
+            next (ApiError.internal(e.message));
+        }
+    }
 
 }
 

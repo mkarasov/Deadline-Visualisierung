@@ -43,6 +43,7 @@ const Dashboard = () => {
     };
 
     const handleDelete = () => {
+        console.log("dsadas");
         setShowConfirm(true);
     }
 
@@ -255,14 +256,7 @@ const Dashboard = () => {
                 <button className={classes.button} onClick={uploadFile}>
                     Hochladen 
                 </button>
-                
-                <button 
-                    className={classes.button} 
-                    onClick={fetchDeadlines} 
-                    style={{marginLeft: 'auto'}}
-                >
-                    Aktualisieren
-                </button>
+            
 
                 <button
                     className={`${classes.button} ${classes.deleteButton}`}
@@ -280,7 +274,7 @@ const Dashboard = () => {
             />
 
             <ConfirmModal 
-                open={showConfirm}
+                open={!!showConfirm}
                 title={"Dashboard löschen"}
                 message={"Möchten Sie das Dashboard löschen?"}
                 onConfirm={confirmDelete}

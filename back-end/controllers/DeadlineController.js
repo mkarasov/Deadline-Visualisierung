@@ -1,8 +1,9 @@
 const ical = require('node-ical');
-const { Deadline } = require('../models/models');
+const { Deadline, User } = require('../models/models');
 const ApiError = require('../classes/ApiError');
 const generateUidHash = require('../utils/generateUidHash');
 const calculateMetadata = require('../utils/metadataCalculator');
+const calculateStatistics = require('../utils/statisticCalculator');
 
 class DeadlineController {
 
@@ -77,6 +78,27 @@ class DeadlineController {
             });
 
             return res.status(200).json({ message: "Deleted successfully "});
+
+        } catch (e) {
+            next(ApiError.internal(e.message));
+        }
+    }
+
+    async getStatisticByUserId(req, res, next) {
+        try {
+            const id = req.user.id;
+
+            const user = await User.findOne({ where: {id: id} });
+            if (!user) return next(ApiError.badRequest(`User not found`));
+
+            const deadlines = await Deadline.findAll({ where: {userId: id} });
+
+            const stats = calculateStatistics(deadlines);
+
+            return res.json({
+                username: user.email, 
+                stats: stats
+            });
 
         } catch (e) {
             next(ApiError.internal(e.message));

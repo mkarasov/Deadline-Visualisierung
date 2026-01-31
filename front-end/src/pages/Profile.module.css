@@ -1,0 +1,110 @@
+.profilePage {
+    background-color: #0f0c29; 
+    height: 100vh;
+    overflow-y: auto;
+    color: white;
+    padding: 60px 20px 80px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.avatar {
+    width: 100px; height: 100px;
+    background: linear-gradient(135deg, #3be9f4, #2b90d9);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 3rem; font-weight: bold; color: #fff;
+    box-shadow: 0 0 25px rgba(59, 233, 244, 0.4);
+    border: 3px solid rgba(255,255,255,0.2);
+}
+
+.username { margin: 0; font-size: 2.2rem; font-weight: 700; letter-spacing: 1px; }
+.subtitle { color: #8892b0; margin-top: 8px; font-size: 1rem; }
+
+/* GRID */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 50px;
+}
+
+/* CARDS */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 180px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.cardIcon { font-size: 2rem; margin-bottom: 10px; opacity: 0.8; }
+.cardValue { font-size: 3.5rem; font-weight: 800; margin-bottom: 5px; line-height: 1; color: #fff; }
+
+.cardValueSmall {
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 10px;
+    min-height: 50px; 
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1.2; word-break: break-word;
+}
+
+.cardLabel {
+    color: #a8b2d1; font-size: 0.85rem; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 600;
+    display: flex; flex-direction: column; gap: 5px;
+}
+
+.subLabel { color: #fff; font-size: 0.8rem; opacity: 0.7; text-transform: none; }
+
+/* Farben */
+.cardDanger { border-bottom: 4px solid #ff4d4d; }
+.cardDanger .cardValueSmall, .cardDanger .cardIcon { color: #ff4d4d; }
+
+.cardWarn { border-bottom: 4px solid #ffbd2e; }
+.cardWarn .cardValueSmall, .cardWarn .cardIcon { color: #ffbd2e; }
+
+.cardInfo { border-bottom: 4px solid #3be9f4; }
+.cardInfo .cardValue, .cardInfo .cardIcon { color: #3be9f4; }
+
+/* LOGOUT BUTTON */
+.logoutButton {
+    background: transparent;
+    border: 1px solid #ff4d4d; color: #ff4d4d;
+    padding: 12px 30px; font-size: 1rem;
+    border-radius: 30px; cursor: pointer;
+    transition: all 0.3s; font-weight: 600;
+}
+
+.logoutButton:hover {
+    background: #ff4d4d; color: white;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+}
+
+.loadingText, .errorText { color: #fff; font-size: 1.2rem; margin-top: 100px; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

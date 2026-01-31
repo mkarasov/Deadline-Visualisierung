@@ -7,5 +7,6 @@ const router = Router();
 router.post('/upload', authorizationMiddleware, deadlineController.upload);
 router.get('/', authorizationMiddleware, deadlineController.getByUserId);
 router.delete('/', authorizationMiddleware, deadlineController.deleteByUserId);
+router.get('/statistic', authorizationMiddleware, deadlineController.getStatisticByUserId);
 
 module.exports = router;
