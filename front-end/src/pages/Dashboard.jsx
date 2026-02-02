@@ -43,7 +43,6 @@ const Dashboard = () => {
     };
 
     const handleDelete = () => {
-        console.log("dsadas");
         setShowConfirm(true);
     }
 
@@ -75,7 +74,7 @@ const Dashboard = () => {
     let daysLeft = 0;
     if (nextDeadline) {
         const diff = new Date(nextDeadline.deadline_date) - new Date();
-        daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        daysLeft = Math.round(diff / (1000 * 60 * 60 * 24));
     }
 
     useEffect(() => {
@@ -305,9 +304,14 @@ const Dashboard = () => {
                             <span className={classes.nextDate}>
                                 📅 {new Date(nextDeadline.deadline_date).toLocaleDateString('de-DE')}
                             </span>
-                            <span className={classes.nextDays}>
-                                ⏳ Noch {daysLeft} Tage
+                            
+                            <span 
+                                className={classes.nextDays}
+                                style={daysLeft === 0 ? { backgroundColor: '#ff4d4d', color: 'white' } : {}}
+                            >
+                                {daysLeft === 0 ? "🚨 HEUTE fällig!" : `⏳ Noch ${daysLeft} Tage`}
                             </span>
+                            
                         </div>
                     </div>
                 )}
