@@ -1,6 +1,6 @@
 # Deadline-Visualisierung – Eine kritische Reflexion
 #### Author1: Mykhailo Karasov 2197837
-#### Video: <URL> oder "VC"
+#### Video: https://youtu.be/XReJbvYaBxY
 #### Description:
 
 ### Projektüberblick
