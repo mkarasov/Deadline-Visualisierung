@@ -10,6 +10,68 @@ Die Anwendung ermöglicht es Benutzern, ihre bestehenden Kalenderdaten (im .ics-
 
 ---
 
+### Back-End Setup
+
+**Voraussetzungen:**
+* Node.js installiert
+* PostgreSQL installiert und aktiv
+
+**Schritt 1: Abhängigkeiten installieren**
+Navigieren Sie in das `back-end` Verzeichnis und führen Sie den folgenden Befehl aus. Der Befehl `npm install` liest die `package.json`-Datei und installiert automatisch alle für das Projekt benötigten Abhängigkeiten (wie `express`, `sequelize`, `pg`, `bcrypt` usw.):
+
+```bash
+cd back-end
+npm install
+```
+
+**Schritt 2: Umgebungsvariablen (.env) konfigurieren**
+Erstellen Sie eine Datei namens `.env` im Verzeichnis `back-end` und fügen Sie die folgenden Variablen ein. Tragen Sie dort Ihre eigenen lokalen Datenbank- und Serverdaten ein:
+
+```env
+PORT=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+JWT_SECRET_KEY=
+```
+
+*Hinweis: Stellen Sie sicher, dass in Ihrer lokalen PostgreSQL-Instanz eine Datenbank mit dem bei `DB_NAME` angegebenen Namen existiert. Die benötigten Tabellen werden beim ersten Start des Servers durch Sequelize automatisch erstellt.*
+
+**Schritt 3: Server starten**
+Starten Sie den Server. Für die Entwicklung wird das Skript `npm run dev` empfohlen, welches `nodemon` nutzt, um den Server bei Code-Änderungen automatisch neu zu starten:
+
+```bash
+npm run dev
+```
+*(Alternativ ohne nodemon: `node app.js`)*
+
+### Front-End Setup
+
+**Voraussetzungen:**
+* Das Back-End sollte idealerweise bereits laufen (siehe oben), damit die API-Anfragen des Frontends verarbeitet werden können.
+
+**Schritt 1: Abhängigkeiten installieren**
+Öffnen Sie ein neues Terminal-Fenster, navigieren Sie in das `front-end` Verzeichnis und führen Sie den folgenden Befehl aus. Dieser installiert alle in der `package.json` definierten Frontend-Bibliotheken (wie `react`, `react-p5`, `axios` und `react-router-dom`):
+
+```bash
+cd front-end
+npm install
+```
+
+**Schritt 2: Umgebungsvariablen (Optional)**
+Standardmäßig ist das Frontend so konfiguriert, dass es Anfragen an `http://localhost:7000/api/` sendet. Falls Ihr Backend auf einem anderen Port läuft, können Sie eine `.env` Datei im `front-end` Verzeichnis anlegen und die URL entsprechend anpassen. Wenn Sie die Standard-Ports nutzen, können Sie diesen Schritt überspringen.
+
+**Schritt 3: Frontend-Server starten**
+Starten Sie die React-Entwicklungsumgebung mit dem folgenden Befehl:
+
+```bash
+npm start
+```
+
+Der Server wird gestartet und die Anwendung öffnet sich normalerweise automatisch in Ihrem Standard-Browser unter der Adresse `http://localhost:3000`.
+
 ### Architektur und Dateistruktur
 
 Das Projekt folgt einer Client-Server-Architektur. Im Folgenden wird die Funktion der einzelnen, selbst geschriebenen Dateien detailliert beschrieben, unterteilt in Backend und Frontend.
