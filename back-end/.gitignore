@@ -1,5 +1,4 @@
 node_modules/
 *.ics
-*.json
 .DS_Store
 .env
